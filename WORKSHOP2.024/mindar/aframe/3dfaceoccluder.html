@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- Importation de la librairie MindAR pour le suivi facial avec A-Frame -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+  </head>
+  <body>
+    <!-- Création d'une scène A-Frame utilisant MindAR pour le suivi du visage -->
+    <a-scene mindar-face embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-assets>
+        <!-- Chargement des modèles 3D à utiliser dans la scène -->
+        <a-asset-item id="glassesModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/glasses/scene.gltf"></a-asset-item>
+        <a-asset-item id="headModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/sparkar/headOccluder.glb"></a-asset-item>
+      </a-assets>
+
+      <!-- Caméra désactivée par défaut -->
+      <a-camera active="false" position="0 0 0"></a-camera>
+      
+      <!-- Création d'une entité utilisant MindAR pour suivre le visage -->
+      <a-entity mindar-face-target="anchorIndex: 168">
+        <!-- Modèle 3D de l'occulteur de tête, utilisé pour occulter les parties du visage cachées par les lunettes -->
+        <a-gltf-model mindar-face-occluder position="0 -0.3 0.15" rotation="0 0 0" scale="0.065 0.065 0.065" src="#headModel"></a-gltf-model>
+      </a-entity>
+      
+      <!-- Création d'une entité pour afficher les lunettes sur le visage -->
+      <a-entity mindar-face-target="anchorIndex: 168">
+        <a-gltf-model rotation="0 0 0" position="0 0 0" scale="0.01 0.01 0.01" src="#glassesModel"></a-gltf-model>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
